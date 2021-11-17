@@ -2,9 +2,21 @@
 // В результате при перетаскивании ползунка будет меняться размер текста.
 
 
-const inputEl = document.querySelector('#font-size-control');
-const spanEl = document.querySelector('span');
+const inputEl = document.querySelector("#font-size-control");
 
-inputEl.addEventListener("input", (event) => {
-    spanEl.style.fontSize = `${event.currentTarget.value}px`;
-});
+const textEl = document.querySelector("#text");
+
+// узнать значение шрифта документа
+const textSizeDefault = Number(
+  window
+    .getComputedStyle(document.body)
+    .getPropertyValue("font-size")
+    .match(/\d+/)[0]
+);
+
+// функция изменния размера шрифта
+const changeTextSize = () =>
+  (textEl.style.fontSize = `${(textSizeDefault * inputEl.value) / 50}px`);
+
+// слушать изменения на поле ввода
+inputEl.addEventListener("input", changeTextSize.bind(inputEl));
